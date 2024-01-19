@@ -18,7 +18,7 @@ The project consists in an web application for management of sport motorcycles, 
 
 ### Requirements
 
-* [.NET Core 7.0](https://dotnet.microsoft.com/download/dotnet-core/7.0)
+* [.NET Core 8.0](https://dotnet.microsoft.com/download/dotnet-core/8.0)
 * [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
 * [Docker](https://www.docker.com/)
 * [Visual Studio](https://visualstudio.microsoft.com/pt-br/)
