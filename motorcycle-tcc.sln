@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motorcycle.API", "src\Motor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motorcycle.Domain", "src\Motorcycle.Domain\Motorcycle.Domain.csproj", "{2908DF51-A638-4653-AE78-7783B29B50C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motorcycle.Infra.Data", "src\Motorcycle.Infra\Motorcycle.Infra.Data.csproj", "{0F4AA0CB-276C-464A-8094-BA37A2C21E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motorcycle.Infra.Data", "src\Motorcycle.Infra.Data\Motorcycle.Infra.Data.csproj", "{0F4AA0CB-276C-464A-8094-BA37A2C21E90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Motorcycle.Test", "src\Motorcycle.Test\Motorcycle.Test.csproj", "{7875C0D4-84F9-4609-8326-BC6BBE196546}"
 EndProject

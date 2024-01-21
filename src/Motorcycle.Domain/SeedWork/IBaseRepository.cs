@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 
-namespace Motorcycle.Domain.SeedWork
-{
+namespace Motorcycle.Domain.SeedWork;
+
     public interface IBaseRepository<TEntity>
          where TEntity : class
     {
@@ -37,4 +37,4 @@ namespace Motorcycle.Domain.SeedWork
         Task UpdateRangeAsync(IEnumerable<TEntity> entities);
         Task UpdateRangeNoTrackingAsync(IEnumerable<TEntity> entities);
     }
-}
+

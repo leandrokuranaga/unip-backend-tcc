@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Motorcycle.Domain.BudgetAggregate;
 using Motorcycle.Domain.MaintenanceAggregate;
@@ -8,11 +9,10 @@ using Motorcycle.Infra.Data.Mapping;
 
 namespace Motorcycle.Infra.Data
 {
-    public class ContextDb : DbContext
+    public class ContextDb : IdentityDbContext
     {
         public ContextDb(DbContextOptions<ContextDb> options) : base(options)
         {
-            Database.EnsureCreated();
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
         }

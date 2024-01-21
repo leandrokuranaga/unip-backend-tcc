@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Motorcycle.Infra\Motorcycle.Infra.Data.csproj" />
+    <ProjectReference Include="..\Motorcycle.Infra.Data\Motorcycle.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

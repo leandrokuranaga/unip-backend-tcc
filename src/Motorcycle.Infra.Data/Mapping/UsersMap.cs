@@ -10,11 +10,7 @@ namespace Motorcycle.Infra.Data.Mapping
         {
             builder.HasKey(x => x.Id);
 
-            builder.Property(u => u.Name).IsRequired().HasColumnType("varchar(100)");
-            builder.Property(u => u.Admin).IsRequired().HasColumnType("bit");
-            builder.Property(u => u.Email).IsRequired().HasColumnType("varchar(100)");
-            builder.Property(u =>  u.Password).IsRequired().HasColumnType("varchar(100)");
-            
+            builder.Property(u => u.Admin).IsRequired().HasColumnType("bit");                        
         }
     }
 }

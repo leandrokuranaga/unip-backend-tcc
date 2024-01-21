@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>motorcycle_tcc</RootNamespace>
+    <UserSecretsId>9b78cea6-3fdc-4ec2-9907-62f3ef1b8f71</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -21,7 +25,7 @@
     <ProjectReference Include="..\Motorcycle.Application\Motorcycle.Application.csproj" />
     <ProjectReference Include="..\Motorcycle.Domain\Motorcycle.Domain.csproj" />
     <ProjectReference Include="..\Motorcycle.Infra.CrossCutting.IoC\Motorcycle.Infra.CrossCutting.IoC.csproj" />
-    <ProjectReference Include="..\Motorcycle.Infra\Motorcycle.Infra.Data.csproj" />
+    <ProjectReference Include="..\Motorcycle.Infra.Data\Motorcycle.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
