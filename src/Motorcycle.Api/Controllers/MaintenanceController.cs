@@ -6,14 +6,9 @@ namespace motorcycle_tcc.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MaintenanceController : Controller
+    public class MaintenanceController(IMaintenanceService historicService) : Controller
     {
-        private readonly IMaintenanceService _maintenanceService;
-
-        public MaintenanceController(IMaintenanceService historicService)
-        {
-            _maintenanceService = historicService;
-        }
+        private readonly IMaintenanceService _maintenanceService = historicService;
 
         [HttpGet]
         public async Task<IEnumerable<MaintenanceResponse>> GetAsync(int id)

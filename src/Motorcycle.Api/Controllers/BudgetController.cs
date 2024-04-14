@@ -6,14 +6,9 @@ namespace motorcycle_tcc.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BudgetController : Controller
+    public class BudgetController(IBudgetService budgetService) : Controller
     {
-        private readonly IBudgetService _budgetService;
-
-        public BudgetController(IBudgetService budgetService)
-        {
-            _budgetService = budgetService;
-        }
+        private readonly IBudgetService _budgetService = budgetService;
 
         [HttpGet]
         public async Task<IEnumerable<BudgetResponse>> GetBudgetsync(int id)

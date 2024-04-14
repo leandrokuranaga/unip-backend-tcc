@@ -4,14 +4,9 @@ using Motorcycle.Domain.MotorcycleAggregate;
 
 namespace Motorcycle.Application.Motorcycle.Services
 {
-    public class MotorcycleService : IMotorcycleService
+    public class MotorcycleService(IMotorcycleRepository motorcycleRepository) : IMotorcycleService
     {
-        private readonly IMotorcycleRepository _motorcycleRepository;
-
-        public MotorcycleService(IMotorcycleRepository motorcycleRepository)
-        {
-            _motorcycleRepository = motorcycleRepository;
-        }
+        private readonly IMotorcycleRepository _motorcycleRepository = motorcycleRepository;
 
         public async Task<bool> DeleteAsync(int id)
         {
@@ -25,34 +20,18 @@ namespace Motorcycle.Application.Motorcycle.Services
         {
             var status = await _motorcycleRepository.GetByIdAsync(id, false);
 
-
-            MotorcycleStatusResponse response = new MotorcycleStatusResponse 
-            {
-                Id = status.Id,
-                Status = status.Status,
-                Model = status.Model,
-            };
+            var response = (MotorcycleStatusResponse)status;
 
             return response;
         }
 
         public async Task<MotorcycleResponse> PostAsync(MotorcycleRequest motorcycleRequest)
         {
-
-            MotorcycleDomain motor = new()
-            {
-                IdOwner = motorcycleRequest.IdOwner,
-                Model = motorcycleRequest.Model,
-                Status = motorcycleRequest.Status,
-            };
+            var motor = (MotorcycleDomain)motorcycleRequest;
             
             await _motorcycleRepository.InsertOrUpdateAsync(motor);
 
-            MotorcycleResponse response = new MotorcycleResponse() 
-            {
-                Status = motorcycleRequest.Status,
-                Model = motorcycleRequest.Model,
-            };
+            var response = (MotorcycleResponse)motor;
 
             return response;
         }

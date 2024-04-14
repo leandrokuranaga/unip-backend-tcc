@@ -2,24 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Motorcycle.Application.Users.Models.Request;
 using Motorcycle.Application.Users.Services;
-using Motorcycle.Infra.Http.Authenticate;
 
 namespace motorcycle_tcc.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UserController(IUserService userService) : Controller
     {
-        private readonly IUserService _userService;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IPasswordHasher<IdentityUser> _passwordHasher;
-        private readonly IAuthenticateService _authenticationService;
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
-        
+        private readonly IUserService _userService = userService;
+
         [HttpPost]
         public async Task<IActionResult> CreateUserAsync(UserRequest request)
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Motorcycle.Application.Users.Models.Request;
 using Motorcycle.Application.Users.Models.Response;
 using Motorcycle.Domain.UserAggregate;
@@ -11,10 +12,13 @@ using System.Text;
 
 namespace Motorcycle.Application.Users.Services
 {
-    public class UserService : IUserService
+    public class UserService(
+        IUserRepository userRepository,
+        IEmailService emailService
+            ) : IUserService
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IEmailService _emailService;
+        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IEmailService _emailService = emailService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IPasswordHasher<IdentityUser> _passwordHasher;
@@ -22,30 +26,17 @@ namespace Motorcycle.Application.Users.Services
 
         private string _newPassword = Guid.NewGuid().ToString();
 
-        public UserService(
-            IUserRepository userRepository,
-            IEmailService emailService
-            )
-        {
-            _userRepository = userRepository;
-            _emailService = emailService;
-        }
-
         #region CreateUser
         public async Task<UserResponse> CreateUserAsync(UserRequest request)
         {
-            var userExists = await VerifyExistingUserAsync(request);
+            var userExists = await VerifyExistingUserAsync(request.Email);
 
             if (userExists)
             {
                 throw new Exception("User already exists"); 
             }
 
-            IdentityUser users = new()
-            {
-                Email = request.Email,
-                PasswordHash= request.Password,
-            };
+            var users = (IdentityUser)request;
 
             await _userManager.CreateAsync(users);
 
@@ -59,61 +50,34 @@ namespace Motorcycle.Application.Users.Services
             return response;
         }
 
-        private async Task<bool> VerifyExistingUserAsync(UserRequest request)
+        private async Task<bool> VerifyExistingUserAsync(string email)
         {
-            return await _userManager.Users.Where(x => x.Email == request.Email).FirstOrDefault();
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return user != null;
         }
         #endregion
 
         public async Task<bool> Login(UserAuthRequest request)
         {
-            return await VerifyExistingUserAsync(request);
+            return await VerifyExistingUserAsync(request.Email);
         }
 
-        private async Task<bool> VerifyExistingUserAsync(UserAuthRequest request)
-        {
-            return await _userManager.Users.Where(x => x.Email == request.Email).FirstOrDefault();
-        }
         public async Task<UserPasswordResponse> UpdatePassword(UserPasswordRequest request)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id, false);
-
-            if (user == null)
-            {
-                throw new KeyNotFoundException($"User with ID {request.Id} not found.");
-            }
-
-            //user.Password = request.Password;
-
+            var user = await _userRepository.GetByIdAsync(request.Id, false) ?? throw new KeyNotFoundException($"User with ID {request.Id} not found.");
             await _userRepository.UpdateAsync(user);
 
-            UserPasswordResponse response = new()
-            {
-                Password = request.Password,
-                Id = request.Id
-            };
+            var response = (UserPasswordResponse)request;
 
             return response;
         }
 
         public async Task<UserNameResponse> UpdateUser(UserNameRequest request)
         {
-            var user = await _userRepository.GetByIdAsync(request.Id, false);
-
-            if (user == null)
-            {
-                throw new KeyNotFoundException($"User with ID {request.Id} not found.");
-            }
-
-            //user.Name = request.Name;
-
+            var user = await _userRepository.GetByIdAsync(request.Id, false) ?? throw new KeyNotFoundException($"User with ID {request.Id} not found.");
             await _userRepository.UpdateAsync(user);
 
-            UserNameResponse userResp = new()
-            {
-                //Name = user.Name,
-                Id = request.Id,
-            };
+            var userResp = (UserNameResponse)request;
 
             return userResp;
         }
@@ -145,11 +109,9 @@ namespace Motorcycle.Application.Users.Services
         }
         private string HashPassword(string password)
         {
-            using (var sha256 = SHA256.Create())
-            {
-                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-            }
+            using var sha256 = SHA256.Create();
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
         }
     }
 }

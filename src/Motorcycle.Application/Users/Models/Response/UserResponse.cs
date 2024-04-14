@@ -1,6 +1,6 @@
 ﻿namespace Motorcycle.Application.Users.Models.Response
 {
-    public class UserResponse
+    public record UserResponse
     {
         public string? Name { get; set; }
         public string? Email { get; set; }

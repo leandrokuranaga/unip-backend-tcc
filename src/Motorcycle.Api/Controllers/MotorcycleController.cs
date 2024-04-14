@@ -6,15 +6,10 @@ namespace motorcycle_tcc.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MotorcycleController : Controller
+    public class MotorcycleController(IMotorcycleService motorcycleService) : Controller
     {
-        private readonly IMotorcycleService _motorcycleService;
+        private readonly IMotorcycleService _motorcycleService = motorcycleService;
 
-        public MotorcycleController(IMotorcycleService motorcycleService)
-        {
-            _motorcycleService = motorcycleService;
-        }
-        
         [HttpPost]
         public async Task<IActionResult> PostAsync(MotorcycleRequest motorcycleRequest)
         {
