@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Budget\Models\Dto\" />
+    <Folder Include="Budget\Models\Request\" />
+    <Folder Include="Maintenance\Models\Dto\" />
+    <Folder Include="Maintenance\Models\Request\" />
+    <Folder Include="Motorcycle\Models\Dto\" />
+    <Folder Include="Motorcycle\Models\Request\" />
+    <Folder Include="Users\Models\Dto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Motorcycle.Domain\Motorcycle.Domain.csproj" />
+    <ProjectReference Include="..\Motorcycle.Infra.Http\Motorcycle.Infra.Http.csproj" />
+  </ItemGroup>
+
+</Project>
